@@ -32,14 +32,12 @@ public class CustomUserDetailsService implements UserDetailsService {
                         usuarioRol.getRol().getNombre().name()
                 ))
                 .collect(Collectors.toList());
-        return new User(
+        return new CustomUserPrincipal(
                 usuario.getUsername(),
                 usuario.getPasswordHash(),
                 usuario.isActivo(),
-                true,
-                true,
-                true,
-                authorities
+                authorities,
+                usuario.getIdUsuario()
         );
     }
 }
