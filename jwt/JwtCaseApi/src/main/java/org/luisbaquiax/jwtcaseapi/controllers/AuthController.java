@@ -1,13 +1,12 @@
-package org.luisbaquiax.jwtcaseapi.controllers.auth;
+package org.luisbaquiax.jwtcaseapi.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.luisbaquiax.jwtcaseapi.config.security.CustomUserPrincipal;
 import org.luisbaquiax.jwtcaseapi.dtos.*;
 import org.luisbaquiax.jwtcaseapi.services.auth.LoginService;
+import org.luisbaquiax.jwtcaseapi.services.auth.RefreshTokenService;
 import org.luisbaquiax.jwtcaseapi.services.auth.ResetPasswordService;
 import org.luisbaquiax.jwtcaseapi.services.auth.VerificarTokenService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,10 +17,17 @@ public class AuthController {
     private final LoginService loginService;
     private final VerificarTokenService verificarTokenService;
     private final ResetPasswordService resetPasswordService;
+    private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/login")
     public ResponseEntity<AutenticacionResponse> login(@RequestBody AutenticacionRequest request) {
         return ResponseEntity.ok(loginService.login(request));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<MessageSuccess> logout(@RequestHeader("Authorization") String authHeader) {
+        String jwt = authHeader.substring(7); // quita "Bearer "
+        return ResponseEntity.ok(refreshTokenService.logout(jwt));
     }
 
     @PostMapping("/verify")
@@ -39,11 +45,5 @@ public class AuthController {
         return ResponseEntity.ok(resetPasswordService.confirmResetPassword(request));
     }
 
-    @PostMapping("/change-password")
-    public ResponseEntity<MessageSuccess> changePassword(
-            @RequestBody ChangePasswordRequest request,
-            @AuthenticationPrincipal CustomUserPrincipal principal) {
-        return ResponseEntity.ok(resetPasswordService.changePassword(principal.getIdUsuario(), request));
-    }
 }
 

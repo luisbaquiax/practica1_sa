@@ -36,10 +36,6 @@ public class SecurityConfig {
                                 ).permitAll()
 
 
-//                        .requestMatchers(
-//                                "/v1/congress/participants/**"
-//                        ).hasAnyAuthority("ROLE_PARTICIPANTE")
-
                                 .requestMatchers(
                                         "/v1/users/internal/**",
                                         "/v1/users/common/**"

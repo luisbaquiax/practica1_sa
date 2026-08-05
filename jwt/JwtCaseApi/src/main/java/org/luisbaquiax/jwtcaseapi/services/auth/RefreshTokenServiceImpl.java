@@ -1,6 +1,7 @@
 package org.luisbaquiax.jwtcaseapi.services.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.luisbaquiax.jwtcaseapi.dtos.MessageSuccess;
 import org.luisbaquiax.jwtcaseapi.exception.NotFoundException;
 import org.luisbaquiax.jwtcaseapi.models.RefreshTokens;
 import org.luisbaquiax.jwtcaseapi.repositories.RefreshTokensRepository;
@@ -30,5 +31,15 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         refreshTokenRepository.save(refreshToken);
 
         return refreshToken;
+    }
+
+    @Override
+    public MessageSuccess logout(String jwt) {
+        String tokenHash = encriptation.hashToken(jwt);
+        refreshTokenRepository.findByToken(tokenHash).ifPresent(sesion -> {
+            sesion.setRevocado(true);
+            refreshTokenRepository.save(sesion);
+        });
+        return new MessageSuccess("Sesión cerrada exitosamente.");
     }
 }

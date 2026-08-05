@@ -19,4 +19,8 @@ public interface RefreshTokensRepository extends JpaRepository<RefreshTokens, Lo
             "WHERE r.usuario.idUsuario = :idUsuario " +
             "AND r.revocado = false")
     void revocarTodosPorUsuario(@Param("idUsuario") Long idUsuario);
+
+    boolean existsByTokenAndRevocadoFalse(String token);
+
+    Optional<RefreshTokens> findByToken(String token);
 }

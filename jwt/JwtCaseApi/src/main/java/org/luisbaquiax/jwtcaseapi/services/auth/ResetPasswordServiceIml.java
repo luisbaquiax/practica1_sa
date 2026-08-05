@@ -40,7 +40,7 @@ public class ResetPasswordServiceIml implements ResetPasswordService {
                     null, user, tokenHash,
                     LocalDateTime.now().plusMinutes(15), false, LocalDateTime.now()));
 
-            String resetLink = "http://localhost:5173/reset-password?token=" + rawToken;
+            String resetLink = "http://localhost:4200/reset-password?token=" + rawToken;
             String html = "<p>Solicitaste cambiar tu contraseña</p>"
                     + "<a href=\"" + resetLink + "\">Cambiar contraseña</a>"
                     + "<p>Este enlace expira en 15 minutos.</p>";

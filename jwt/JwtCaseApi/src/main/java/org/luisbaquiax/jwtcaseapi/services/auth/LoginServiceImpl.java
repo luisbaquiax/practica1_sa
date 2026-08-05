@@ -60,6 +60,14 @@ public class LoginServiceImpl implements LoginService {
                 usuario.getIdUsuario()
         );
 
+        RefreshTokens sesionActiva = new RefreshTokens();
+        sesionActiva.setUsuario(usuario);
+        sesionActiva.setToken(encriptation.hashToken(jwtToken));
+        sesionActiva.setExpiraEn(LocalDateTime.now().plusHours(24));
+        sesionActiva.setRevocado(false);
+        sesionActiva.setCreatedAt(LocalDateTime.now());
+        refreshTokenService.guardarTokenAutenticacion(sesionActiva);
+
         return new AutenticacionResponse(
                 jwtToken,
                 usuario.getUsername(),

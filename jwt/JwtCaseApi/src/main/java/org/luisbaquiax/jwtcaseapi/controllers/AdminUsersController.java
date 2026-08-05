@@ -1,4 +1,4 @@
-package org.luisbaquiax.jwtcaseapi.controllers.adminusers;
+package org.luisbaquiax.jwtcaseapi.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.luisbaquiax.jwtcaseapi.dtos.MessageSuccess;
