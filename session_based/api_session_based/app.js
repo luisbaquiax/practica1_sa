@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:4200",
+    origin: "http://localhost:4300",
     credentials: true,
   })
 );
@@ -24,7 +24,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: false, // true si usas HTTPS
+      secure: false, // true si se usa HTTPS
       maxAge: 1000 * 60 * 60, // 1 hora
       sameSite: "lax",
     },
